@@ -8,7 +8,7 @@ public class Pod : MonoBehaviour
 	public float MaxEnginePower = 40f;
 	public float RollEffect = 50f;
 	public float PitchEffect = 50f;
-	public float YawEffect = 0.2f;
+	public float YawEffect = 1f;
 	public float BankedTurnEffect = 0.5f;
 	public float AutoTurnPitch = 0.5f;
 	public float AutoRollLevel = 0.1f;
@@ -29,6 +29,7 @@ public class Pod : MonoBehaviour
 	private float PitchInput;
 	private float YawInput;
 	private float ThrottleInput;
+	private float VerticalInput;
 
 
 	private float OriginalDrag;
@@ -58,13 +59,14 @@ public class Pod : MonoBehaviour
 			}
 		}
 	}
-	public void Move(float rollInput, float pitchInput, float yawInput, float throttleInput, bool airBrakes)
+	public void Move(float rollInput, float pitchInput, float yawInput, float throttleInput, float verticalInput , bool airBrakes)
 	{
 		this.RollInput = rollInput;
-		this.PitchAngle = pitchInput;
+		this.PitchInput = pitchInput;
 		this.YawInput = yawInput;
 		this.ThrottleInput = throttleInput;
 		this.AirBrakes = airBrakes;
+		this.VerticalInput = verticalInput;
 
 		ClampInput ();
 		CalculateRollAndPitchAngles ();
@@ -158,6 +160,8 @@ public class Pod : MonoBehaviour
 
 		forces += EnginePower * transform.forward;
 
+
+		forces += VerticalInput * 1 * transform.up;
 		rigidbody.AddForce (forces);
 	}
 
@@ -166,7 +170,7 @@ public class Pod : MonoBehaviour
 		Vector3 torque = Vector3.zero;
 
 		torque += PitchInput * PitchEffect * transform.right;
-		torque += YawInput * YawEffect * transform.up;
+		torque += YawInput * 1 * transform.up;
 		torque += -RollInput * RollEffect * transform.forward;
 		torque += BankedTurnAmount * BankedTurnEffect * transform.up;
 
