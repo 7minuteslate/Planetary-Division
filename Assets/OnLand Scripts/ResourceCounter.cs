@@ -15,9 +15,12 @@ public class ResourceCounter : MonoBehaviour {
             resources[i] = transform.GetChild(i).gameObject;
             
         }
+
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
     }
 }
