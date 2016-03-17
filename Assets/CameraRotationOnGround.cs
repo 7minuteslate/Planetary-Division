@@ -14,13 +14,7 @@ public class CameraRotationOnGround : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () 
 	{
-		rb.rotation = Quaternion.Euler (rb.rotation.eulerAngles + new Vector3 
-			(0f, rotationSpeed * Input.GetAxis ("Mouse X") ,0f )); 
-
-		rb.rotation = Quaternion.Euler (rb.rotation.eulerAngles + new Vector3 
-			(0f , 0f , rotationSpeed * Input.GetAxis ("Mouse Y"))); 	
-
-		rb.rotation = Quaternion.Euler (rb.rotation.eulerAngles + new Vector3 
-			(rotationSpeed * Input.GetAxis ("Mouse Z") , 0f , 0f)); 	
+		rb.rotation *= Quaternion.AngleAxis (Input.GetAxis ("Mouse X") * rotationSpeed, transform.up);
+		rb.rotation *= Quaternion.AngleAxis (Input.GetAxis ("Mouse Y") * rotationSpeed, transform.right);
 	}
 }

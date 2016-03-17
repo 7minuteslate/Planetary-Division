@@ -15,4 +15,19 @@ public class FauxGravityAttractor : MonoBehaviour {
 		body.rotation = Quaternion.Slerp(body.rotation,targetRotation,50f * Time.deltaTime );
 	}   
 
+	void OnTriggerEnter(Collider col)
+	{
+		if (col.tag.Equals ("Pod") || col.tag.Equals ("Player") ) 
+		{
+			col.GetComponent<FauxGravityBody> ().attractor = this;
+		}
+	}
+
+	void OnTriggerExit(Collider col)
+	{
+		if (col.tag.Equals ("Pod") || col.tag.Equals ("Player")) 
+		{
+			col.GetComponent<FauxGravityBody> ().attractor = null;
+		}
+	}
 }
